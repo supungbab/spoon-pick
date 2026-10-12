@@ -1,0 +1,440 @@
+/*
+ * 픽셀 UI. 팔레트는 Sweetie 16 계열.
+ * Galmuri 는 정수 배율일 때만 또렷하다 — Galmuri11 은 12px, Galmuri14 는 15px, Galmuri9 는 10px 의 배수로 쓴다.
+ */
+:root {
+  --night: #1a1c2c;
+  --dusk: #333c57;
+  --navy: #29366f;
+  --blue: #3b5dc9;
+  --steel: #94b0c2;
+  --white: #f4f4f4;
+  --yellow: #ffcd75;
+  --amber: #d9902e;
+  --lime: #a7f070;
+  --green: #38b764;
+  --orange: #ef7d57;
+  --red: #b13e53;
+  --px: 4px;
+  font-family: Galmuri14, sans-serif;
+  font-size: 15px;
+  color: var(--white);
+  -webkit-font-smoothing: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+body,
+h1,
+h2,
+p,
+ul,
+dl,
+dd {
+  margin: 0;
+  padding: 0;
+}
+li {
+  list-style: none;
+}
+em {
+  font-style: normal;
+}
+
+body {
+  background: var(--night);
+  min-height: 100vh;
+}
+
+main {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 20px 20px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+button:focus-visible {
+  outline: var(--px) solid var(--lime);
+  outline-offset: 6px;
+}
+
+h1 {
+  font-family: Galmuri11, sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1;
+  color: var(--yellow);
+  text-shadow:
+    3px 0 var(--red),
+    0 3px var(--red),
+    3px 3px var(--red);
+}
+
+/* 상단 HUD */
+.hud {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 12px;
+  color: var(--steel);
+}
+.hud b {
+  font-family: Galmuri11, sans-serif;
+  font-size: 24px;
+  color: var(--white);
+  margin: 0 2px;
+}
+.hud.off b {
+  color: var(--dusk);
+}
+
+/* 장면 */
+.screen {
+  position: relative;
+  margin: var(--px);
+  background: var(--navy);
+  box-shadow:
+    0 calc(var(--px) * -1) 0 0 var(--dusk),
+    0 var(--px) 0 0 var(--dusk),
+    calc(var(--px) * -1) 0 0 0 var(--dusk),
+    var(--px) 0 0 0 var(--dusk);
+}
+.over {
+  position: absolute;
+  inset: 0;
+  animation: pop 0.2s steps(2, end) both;
+}
+.spoon-tag,
+.delta {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: Galmuri11, sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  text-shadow:
+    2px 0 var(--night),
+    -2px 0 var(--night),
+    0 2px var(--night),
+    0 -2px var(--night);
+}
+.spoon-tag {
+  top: 12px;
+  left: 14px;
+  right: auto;
+  text-align: left;
+  animation: pop 0.3s 0.65s steps(3, end) both;
+}
+.delta {
+  top: 18%;
+  animation: rise 1.4s steps(7, end) both;
+}
+.up {
+  color: var(--lime);
+}
+.down {
+  color: var(--orange);
+}
+
+/* 화면에는 보이지 않고 스크린리더만 읽는다 */
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* 대화창 */
+.dialog {
+  position: relative;
+  margin: var(--px);
+  min-height: 104px;
+  padding: 16px 18px;
+  background: var(--white);
+  color: var(--night);
+  box-shadow:
+    0 calc(var(--px) * -1) 0 0 var(--steel),
+    0 var(--px) 0 0 var(--steel),
+    calc(var(--px) * -1) 0 0 0 var(--steel),
+    var(--px) 0 0 0 var(--steel),
+    inset 0 calc(var(--px) * -1) 0 0 #c2d3de;
+  font-family: Galmuri9, sans-serif;
+  font-size: 20px;
+  line-height: 1.5;
+  white-space: pre-line;
+  word-break: keep-all;
+  cursor: pointer;
+  user-select: none;
+}
+.more {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 10px;
+  color: var(--red);
+  animation: blink 0.8s steps(1, end) infinite;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: pop 0.2s steps(2, end) both;
+}
+
+/* 버튼 */
+.btn {
+  margin: var(--px);
+  padding: 14px 16px 18px;
+  background: var(--yellow);
+  color: var(--night);
+  font-family: Galmuri11, sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  box-shadow:
+    0 calc(var(--px) * -1) 0 0 var(--yellow),
+    0 var(--px) 0 0 var(--amber),
+    calc(var(--px) * -1) 0 0 0 var(--yellow),
+    var(--px) 0 0 0 var(--yellow),
+    inset 0 calc(var(--px) * -1) 0 0 var(--amber);
+}
+.btn:active {
+  transform: translateY(var(--px));
+  box-shadow:
+    0 calc(var(--px) * -1) 0 0 var(--yellow),
+    0 var(--px) 0 0 var(--yellow),
+    calc(var(--px) * -1) 0 0 0 var(--yellow),
+    var(--px) 0 0 0 var(--yellow);
+}
+.btn.ghost {
+  background: var(--dusk);
+  color: var(--white);
+  box-shadow:
+    0 calc(var(--px) * -1) 0 0 var(--dusk),
+    0 var(--px) 0 0 var(--night),
+    calc(var(--px) * -1) 0 0 0 var(--dusk),
+    var(--px) 0 0 0 var(--dusk),
+    inset 0 calc(var(--px) * -1) 0 0 var(--night);
+}
+
+/* 태어난 직후 상태창 */
+.status {
+  margin: var(--px);
+  padding: 14px 16px;
+  background: var(--dusk);
+  display: grid;
+  gap: 8px;
+  box-shadow:
+    0 calc(var(--px) * -1) 0 0 var(--dusk),
+    0 var(--px) 0 0 var(--dusk),
+    calc(var(--px) * -1) 0 0 0 var(--dusk),
+    var(--px) 0 0 0 var(--dusk);
+}
+.status div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.status dt {
+  color: var(--steel);
+}
+.bar {
+  display: flex;
+  gap: 4px;
+}
+.bar i {
+  width: 20px;
+  height: 12px;
+  background: var(--night);
+}
+.bar i.on {
+  background: var(--lime);
+}
+
+/* 갈림길 선택지 */
+.choices {
+  display: grid;
+  gap: 12px;
+}
+.choice {
+  width: 100%;
+  margin: var(--px) 0;
+  padding: 12px 16px 14px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 4px 12px;
+  text-align: left;
+  background: var(--dusk);
+  box-shadow:
+    0 calc(var(--px) * -1) 0 0 var(--dusk),
+    0 var(--px) 0 0 var(--dusk),
+    calc(var(--px) * -1) 0 0 0 var(--dusk),
+    var(--px) 0 0 0 var(--dusk);
+}
+.choice-name {
+  font-family: Galmuri11, sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+}
+.choice-name::before {
+  content: '▶ ';
+  font-size: 12px;
+  vertical-align: middle;
+  color: var(--dusk);
+}
+.choice-chance {
+  font-family: Galmuri11, sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--yellow);
+}
+.choice-desc {
+  grid-column: 1 / -1;
+  color: var(--steel);
+}
+.choice:hover .choice-name::before,
+.choice:focus-visible .choice-name::before {
+  color: var(--yellow);
+}
+.choice:active {
+  background: var(--blue);
+  box-shadow:
+    0 calc(var(--px) * -1) 0 0 var(--blue),
+    0 var(--px) 0 0 var(--blue),
+    calc(var(--px) * -1) 0 0 0 var(--blue),
+    var(--px) 0 0 0 var(--blue);
+}
+
+/* 인생 결산 */
+.tally {
+  margin: var(--px);
+  padding: 16px 18px 18px;
+  background: var(--white);
+  color: var(--night);
+  box-shadow:
+    0 calc(var(--px) * -1) 0 0 var(--white),
+    0 var(--px) 0 0 var(--white),
+    calc(var(--px) * -1) 0 0 0 var(--white),
+    var(--px) 0 0 0 var(--white);
+}
+.tally h2 {
+  font-family: Galmuri11, sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+.tally table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.tally th,
+.tally td {
+  padding: 6px 0;
+  vertical-align: top;
+}
+.tally th {
+  text-align: left;
+  font-weight: 400;
+}
+.tally th em {
+  display: block;
+  font-family: Galmuri11, sans-serif;
+  font-size: 12px;
+}
+.tally td {
+  text-align: right;
+  white-space: nowrap;
+  padding-left: 12px;
+}
+.tally .up {
+  color: var(--green);
+}
+.tally .down {
+  color: var(--red);
+}
+.tally tfoot th,
+.tally tfoot td {
+  padding-top: 12px;
+  border-top: var(--px) dashed var(--night);
+  font-family: Galmuri11, sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+}
+.tally tfoot th {
+  font-family: Galmuri14, sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  vertical-align: middle;
+}
+.rank {
+  margin-top: 14px;
+  word-break: keep-all;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.rank b {
+  padding: 6px 10px 8px;
+  background: var(--red);
+  color: var(--white);
+  font-family: Galmuri11, sans-serif;
+  font-size: 24px;
+  white-space: nowrap;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+@keyframes rise {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
